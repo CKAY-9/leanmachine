@@ -24,7 +24,7 @@ C.DarkRP = {
 -- Barrel
 --------------------------------------------------------------------------------
 C.Barrel = {
-    Model         = "models/props_c17/oildrum001.mdl",
+    Model         = "models/props_borealis/bluebarrel001.mdl",
     Color         = Color(110, 80, 150),
     Material      = "",             -- Optional material override
     Health        = 200,            -- 0 = indestructible
@@ -52,8 +52,8 @@ C.Ingredients = {
 -- Mixing
 --------------------------------------------------------------------------------
 C.Mix = {
-    Time       = 15,     -- Seconds of active shaking needed to reach 100%
-    ShakeSpeed = 550,    -- Minimum cup speed (pixels/sec at 1080p) that counts as shaking
+    Time       = 10,     -- Seconds of active shaking needed to reach 100%
+    ShakeSpeed = 500,    -- Minimum cup speed (pixels/sec at 1080p) that counts as shaking
     Decay      = 0,      -- Progress lost per second while NOT shaking (0.02 = 2%/s). 0 = none
 }
 
@@ -95,7 +95,7 @@ C.Buyer = {
         ["ValveBiped.Bip01_Spine2"] = Angle(0, 6, 0),
         ["ValveBiped.Bip01_Head1"]  = Angle(0, -8, 0),
     },
-    PricePerCup   = 1200,
+    PricePerCup   = 1000,
     MaxDistance   = 140,
     AllowPolice   = false,        -- Can civil protection jobs sell lean?
     BlockedJobs   = {},           -- e.g. { "TEAM_MAYOR" }

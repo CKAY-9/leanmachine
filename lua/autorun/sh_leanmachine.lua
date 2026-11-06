@@ -20,8 +20,11 @@ end
 
 shared("leanmachine/sh_config.lua")
 shared("leanmachine/sh_core.lua")
+shared("leanmachine/sh_settings.lua")
 server("leanmachine/sv_core.lua")
 server("leanmachine/sv_buyer.lua")
+server("leanmachine/sv_settings.lua")
 client("leanmachine/cl_menu.lua")
 client("leanmachine/cl_sell.lua")
 client("leanmachine/cl_effects.lua")
+client("leanmachine/cl_settings.lua")
