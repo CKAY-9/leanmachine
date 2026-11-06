@@ -11,7 +11,7 @@ local C = LeanMachine.Config
 -- DarkRP F4 shop entry
 --------------------------------------------------------------------------------
 C.DarkRP = {
-    Register    = true,             -- Set false if you add lean_barrel yourself in darkrpmodification
+    Register    = false,             -- Set false if you add lean_barrel yourself in darkrpmodification
     Name        = "Lean Barrel",
     Command     = "buyleanbarrel",
     Price       = 2500,
