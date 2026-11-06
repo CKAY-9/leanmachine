@@ -1,0 +1,9 @@
+ENT.Type        = "anim"
+ENT.Base        = "base_gmodentity"
+ENT.PrintName   = "Lean Buyer"
+ENT.Author      = "Lean Machine"
+ENT.Category    = "Lean Machine"
+ENT.Spawnable   = true
+ENT.AdminOnly   = true
+ENT.RenderGroup = RENDERGROUP_BOTH
+ENT.AutomaticFrameAdvance = true
