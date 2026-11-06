@@ -917,7 +917,7 @@ function FRAME:SetView(class, subtitle)
 end
 
 function FRAME:ShowIngredients()
-    self:SetView("LeanMachine.Ingredients", "Add every ingredient to the barrel.")
+    self:SetView("LeanMachine.Ingredients", "Add every ingredient to the machine.")
 end
 
 function FRAME:ShowMixer()

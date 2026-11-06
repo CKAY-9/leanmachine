@@ -74,7 +74,7 @@ net.Receive(LM.NET_SETTINGS, function(len, ply)
     notify(ply, action == REQ_RESET and "Lean Machine settings reset to defaults." or "Lean Machine settings saved.")
 
     if LM.Config.DarkRP.Register ~= wasRegistered and not LM.SyncDarkRPEntity() then
-        local msg = "The Lean Barrel F4 entry couldn't be " .. (LM.Config.DarkRP.Register and "added" or "removed")
+        local msg = "The Lean Machine F4 entry couldn't be " .. (LM.Config.DarkRP.Register and "added" or "removed")
             .. " live. Change the map or restart the server to apply it."
         notify(ply, msg, true)
         ply:ChatPrint("[Lean Machine] " .. msg)

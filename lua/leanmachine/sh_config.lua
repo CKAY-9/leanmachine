@@ -11,11 +11,11 @@ local C = LeanMachine.Config
 -- DarkRP F4 shop entry
 --------------------------------------------------------------------------------
 C.DarkRP = {
-    Register    = false,            -- Set false if you add lean_barrel yourself in darkrpmodification. Also toggleable in Q menu > Utilities > Lean Machine
-    Name        = "Lean Barrel",
-    Command     = "buyleanbarrel",
+    Register    = false,            -- Set false if you add lean_machine yourself in darkrpmodification. Also toggleable in Q menu > Utilities > Lean Machine
+    Name        = "Lean Machine",
+    Command     = "buyleanmachine",
     Price       = 2500,
-    Max         = 2,                -- Max barrels per player
+    Max         = 2,                -- Max machines per player
     Category    = "Other",          -- Must be an existing DarkRP entity category
     AllowedJobs = {},               -- e.g. { "TEAM_GANG", "TEAM_MOB" }. Empty = every job
 }
@@ -31,7 +31,7 @@ C.Barrel = {
     OwnerOnly     = false,          -- Only the purchaser can brew
     MaxDistance   = 160,            -- Menu closes if the player walks further than this
     Cooldown      = 5,              -- Seconds between batches
-    MaxBatches    = 0,              -- Barrel breaks after this many cups. 0 = unlimited
+    MaxBatches    = 0,              -- Machine breaks after this many cups. 0 = unlimited
     LabelDistance = 300,            -- Floating label draw distance
 }
 

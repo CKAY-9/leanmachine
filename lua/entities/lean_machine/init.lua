@@ -41,20 +41,20 @@ function ENT:Use(ply)
         if user == ply then
             LM.OpenMenu(ply, self)
         else
-            LM.Notify(ply, "Someone else is using this barrel.", 1)
+            LM.Notify(ply, "Someone else is using this machine.", 1)
         end
         return
     end
 
     local owner = self:Getowning_ent()
     if cfg.OwnerOnly and IsValid(owner) and owner ~= ply then
-        LM.Notify(ply, "Only the owner can use this barrel.", 1)
+        LM.Notify(ply, "Only the owner can use this machine.", 1)
         return
     end
 
     local wait = self:GetNextUse() - CurTime()
     if wait > 0 then
-        LM.Notify(ply, string.format("The barrel needs %d more second(s).", math.ceil(wait)), 1)
+        LM.Notify(ply, string.format("The machine needs %d more second(s).", math.ceil(wait)), 1)
         return
     end
 
@@ -117,7 +117,7 @@ function ENT:DropCup(ply)
     hook.Run("LeanMachine.CupCreated", ply, cup, self)
 
     if cfg.MaxBatches > 0 and self:GetBatches() >= cfg.MaxBatches then
-        LM.Notify(ply, "Your lean barrel has worn out.", 0)
+        LM.Notify(ply, "Your lean machine has worn out.", 0)
         timer.Simple(0, function()
             if IsValid(self) then self:Remove() end
         end)

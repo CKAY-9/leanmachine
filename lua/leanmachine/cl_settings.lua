@@ -69,10 +69,10 @@ local function build(panel)
 
     -- DarkRP -----------------------------------------------------------------
     local darkrp = section(panel, "DarkRP")
-    local register = darkrp:CheckBox("Sell Lean Barrel in the F4 menu")
+    local register = darkrp:CheckBox("Sell Lean Machine in the F4 menu")
     register:SetChecked(draft.DarkRPRegister)
     register.OnChange = function(_, v) draft.DarkRPRegister = v end
-    darkrp:ControlHelp("Turn off if you add lean_barrel yourself in darkrpmodification.")
+    darkrp:ControlHelp("Turn off if you add lean_machine yourself in darkrpmodification.")
 
     -- Prices -----------------------------------------------------------------
     local prices = section(panel, "Prices")

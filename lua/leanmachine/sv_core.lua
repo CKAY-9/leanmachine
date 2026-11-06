@@ -115,7 +115,7 @@ net.Receive(LM.NET_ACTION, function(_, ply)
     local act = net.ReadUInt(LM.ACT_BITS)
     local idx = net.ReadUInt(8)
 
-    if not IsValid(ply) or not IsValid(ent) or ent:GetClass() ~= "lean_barrel" then return end
+    if not IsValid(ply) or not IsValid(ent) or ent:GetClass() ~= "lean_machine" then return end
     if ent:GetUser() ~= ply then return end
 
     local handler = handlers[act]

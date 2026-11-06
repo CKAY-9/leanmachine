@@ -1,6 +1,6 @@
 ENT.Type        = "anim"
 ENT.Base        = "base_gmodentity"
-ENT.PrintName   = "Lean Barrel"
+ENT.PrintName   = "Lean Machine"
 ENT.Author      = "Lean Machine"
 ENT.Category    = "Lean Machine"
 ENT.Spawnable   = true

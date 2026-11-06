@@ -153,7 +153,7 @@ end
 -- DarkRP entity registration
 --------------------------------------------------------------------------------
 -- Registered entries are tagged with `leanMachine = true` so we can find (and
--- remove) our own entry without touching a lean_barrel the owner added themselves.
+-- remove) our own entry without touching a lean_machine the owner added themselves.
 local function findEntry()
     if not DarkRPEntities then return end
     for i, v in pairs(DarkRPEntities) do
@@ -178,7 +178,7 @@ local function registerDarkRP()
     end
 
     DarkRP.createEntity(cfg.Name, {
-        ent         = "lean_barrel",
+        ent         = "lean_machine",
         model       = LM.Config.Barrel.Model,
         price       = cfg.Price,
         max         = cfg.Max,
@@ -223,6 +223,6 @@ end)
 -- Covers stale chat commands if the entry was removed live
 hook.Add("canBuyCustomEntity", "LeanMachine.Register", function(ply, item)
     if istable(item) and item.leanMachine and not LM.Config.DarkRP.Register then
-        return false, false, "Lean barrels aren't for sale right now."
+        return false, false, "Lean machines aren't for sale right now."
     end
 end)
