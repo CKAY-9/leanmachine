@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="./LMProdPhoto.png" width="350" height="350" />
+    <img src="./LMProdPhoto.png" width="300" height="300" style="border-radius: 50%" />
 </div>
 
 # Lean Machine
