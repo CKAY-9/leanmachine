@@ -4,47 +4,49 @@
 
 # Lean Machine
 
-Lean Machine is a Garry's Mod addon meant for the DarkRP gamemode. It implements a simple lean making, drinking, and selling mechanic. Players are able to brew cups of lean by mixing various components in a barrel.
+A simple lean making, drinking, and selling mechanic for the DarkRP gamemode in Garry's Mod. Players brew cups of lean by mixing ingredients in a barrel, then drink them or sell them for profit.
 
 ## Features
 
-- Lean Barrel: players use a Lean Barrel to mix together candy, sprite, ice, and codeine into a cup
-- Lean Cup: a cup of lean can either by drank by interacting with it, which results in intoxication, or players can store it while crouching and interacting
-- Lean Buyer: a standalone entity that players can interact with to sell stored cups of lean
-- Haggling: with the Lean Buyer, you are able to haggle for a better sale value. However, if he rejects your haggle, you may be punished
-- Configuration: the core configuration of Lean Machine is easily changable through the Q menu
+- **Lean Barrel:** mix candy, sprite, ice, and codeine into a cup of lean
+- **Lean Cup:** interact with a cup to drink it and become intoxicated, or crouch and interact to store it
+- **Lean Buyer:** a standalone entity that buys your stored cups of lean
+- **Haggling:** haggle with the Lean Buyer for a better price, but if he rejects your offer, you may be punished
+- **Configuration:** change the core settings in-game through the Q menu
 
-## How to Install
+## Installation
 
 ### Steam (Recommended)
-Simply subscribe to <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3834765811">Lean Machine on the Steam Workshop</a> and add it to your
-server's collection.
+
+Subscribe to [Lean Machine on the Steam Workshop](https://steamcommunity.com/sharedfiles/filedetails/?id=3834765811) and add it to your server's collection.
 
 ### Manual
+
 1. Clone this repo into your `garrysmod/addons` folder
 2. Edit any config in `/lua/leanmachine/sh_config.lua`
 3. Restart your server
 
-
-## How to Use
+## Usage
 
 ### Server Admins
-To setup Lean Machine for your Garry's Mod server, you just need to add a Lean Barrel entity
-to the F4 spawn menu and Lean Buyer entities around your map. Configuration can be done in-game via the Utilities tab.
 
-Lean Barrels can be added manually to the F4 menu or you can edit `sh.config.lua`
+1. Add the Lean Barrel to the F4 menu. You can either:
+   - Toggle it in-game under Utilities > Lean Machine > Settings > DarkRP
+   - Set `Register` in `sh_config.lua`:
 
-```lua
-C.DarkRP = {
-    Register = true,     
-    ...
-}
-```
-
-Lean Buyers can be spawned via the Entities tab.
+     ```lua
+     C.DarkRP = {
+         Register = true,
+         ...
+     }
+     ```
+   - Add it manually to your DarkRP entities
+2. Spawn Lean Buyers around your map from the Entities tab
+3. Adjust any other settings in-game via the Utilities tab
 
 ### Players
+
 1. Buy a Lean Barrel
 2. Interact with the barrel to open the menu
 3. Mix in all the necessary ingredients
-4. Pour out a cup to either drink or sell
+4. Pour out a cup to drink or sell

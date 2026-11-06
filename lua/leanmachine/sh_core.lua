@@ -152,10 +152,17 @@ end
 --------------------------------------------------------------------------------
 -- DarkRP entity registration
 --------------------------------------------------------------------------------
+-- Registered entries are tagged with `leanMachine = true` so we can find (and
+-- remove) our own entry without touching a lean_barrel the owner added themselves.
+local function findEntry()
+    if not DarkRPEntities then return end
+    for i, v in pairs(DarkRPEntities) do
+        if istable(v) and v.leanMachine then return i end
+    end
+end
+
 local function registerDarkRP()
     local cfg = LM.Config.DarkRP
-    if not cfg.Register or LM._registered then return end
-    LM._registered = true
 
     local allowed
     if cfg.AllowedJobs and #cfg.AllowedJobs > 0 then
@@ -171,14 +178,51 @@ local function registerDarkRP()
     end
 
     DarkRP.createEntity(cfg.Name, {
-        ent      = "lean_barrel",
-        model    = LM.Config.Barrel.Model,
-        price    = cfg.Price,
-        max      = cfg.Max,
-        cmd      = cfg.Command,
-        category = cfg.Category,
-        allowed  = allowed,
+        ent         = "lean_barrel",
+        model       = LM.Config.Barrel.Model,
+        price       = cfg.Price,
+        max         = cfg.Max,
+        cmd         = cfg.Command,
+        category    = cfg.Category,
+        allowed     = allowed,
+        leanMachine = true,
     })
 end
 
-hook.Add("loadCustomDarkRPItems", "LeanMachine.Register", registerDarkRP)
+-- Adds or removes the F4 entry so it matches Config.DarkRP.Register.
+-- Safe to call at any time; does nothing until DarkRP has loaded its items.
+-- Returns false if the change could not be applied live (needs a map change).
+function LM.SyncDarkRPEntity()
+    if not LM._darkrpReady or not DarkRP then return true end
+
+    local want = LM.Config.DarkRP.Register and true or false
+    local index = findEntry()
+    if want == (index ~= nil) then return true end
+
+    local ok, err
+    if want then
+        if not DarkRP.createEntity then return false end
+        ok, err = pcall(registerDarkRP)
+    else
+        if not DarkRP.removeEntity then return false end
+        ok, err = pcall(DarkRP.removeEntity, index)
+    end
+
+    if not ok then
+        ErrorNoHalt("[Lean Machine] Could not " .. (want and "add" or "remove") .. " the F4 entry live: " .. tostring(err) .. "\n")
+        return false
+    end
+    return (findEntry() ~= nil) == want
+end
+
+hook.Add("loadCustomDarkRPItems", "LeanMachine.Register", function()
+    LM._darkrpReady = true
+    LM.SyncDarkRPEntity()
+end)
+
+-- Covers stale chat commands if the entry was removed live
+hook.Add("canBuyCustomEntity", "LeanMachine.Register", function(ply, item)
+    if istable(item) and item.leanMachine and not LM.Config.DarkRP.Register then
+        return false, false, "Lean barrels aren't for sale right now."
+    end
+end)

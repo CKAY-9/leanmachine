@@ -15,6 +15,7 @@ LM.MAX_HAGGLE_ATTEMPTS = 10
 function LM.GetSettings()
     local H = C.Haggle
     local s = {
+        DarkRPRegister = C.DarkRP.Register and true or false,
         PricePerCup = C.Buyer.PricePerCup,
         Ingredients = {},
         Haggle = {
@@ -42,6 +43,8 @@ end
 -- Validates `s` and writes it into LM.Config. Missing keys keep their current value.
 function LM.ApplySettings(s)
     if not istable(s) then return end
+
+    if s.DarkRPRegister ~= nil then C.DarkRP.Register = tobool(s.DarkRPRegister) end
 
     C.Buyer.PricePerCup = num(s.PricePerCup, C.Buyer.PricePerCup, 0, 1e9, true)
 

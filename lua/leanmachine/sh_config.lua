@@ -11,7 +11,7 @@ local C = LeanMachine.Config
 -- DarkRP F4 shop entry
 --------------------------------------------------------------------------------
 C.DarkRP = {
-    Register    = false,             -- Set false if you add lean_barrel yourself in darkrpmodification
+    Register    = false,            -- Set false if you add lean_barrel yourself in darkrpmodification. Also toggleable in Q menu > Utilities > Lean Machine
     Name        = "Lean Barrel",
     Command     = "buyleanbarrel",
     Price       = 2500,

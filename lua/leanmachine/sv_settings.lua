@@ -58,6 +58,8 @@ net.Receive(LM.NET_SETTINGS, function(len, ply)
         return
     end
 
+    local wasRegistered = LM.Config.DarkRP.Register
+
     if action == REQ_UPDATE then
         if len > 64 * 1024 then return end
         LM.ApplySettings(net.ReadTable())
@@ -70,6 +72,13 @@ net.Receive(LM.NET_SETTINGS, function(len, ply)
     save()
     send()
     notify(ply, action == REQ_RESET and "Lean Machine settings reset to defaults." or "Lean Machine settings saved.")
+
+    if LM.Config.DarkRP.Register ~= wasRegistered and not LM.SyncDarkRPEntity() then
+        local msg = "The Lean Barrel F4 entry couldn't be " .. (LM.Config.DarkRP.Register and "added" or "removed")
+            .. " live. Change the map or restart the server to apply it."
+        notify(ply, msg, true)
+        ply:ChatPrint("[Lean Machine] " .. msg)
+    end
     ServerLog(string.format("[Lean Machine] %s (%s) %s settings\n", ply:Nick(), ply:SteamID(),
         action == REQ_RESET and "reset" or "updated"))
 end)

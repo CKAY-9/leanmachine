@@ -67,6 +67,13 @@ local function build(panel)
         chances[i] = chances[i - 1] or 0.5
     end
 
+    -- DarkRP -----------------------------------------------------------------
+    local darkrp = section(panel, "DarkRP")
+    local register = darkrp:CheckBox("Sell Lean Barrel in the F4 menu")
+    register:SetChecked(draft.DarkRPRegister)
+    register.OnChange = function(_, v) draft.DarkRPRegister = v end
+    darkrp:ControlHelp("Turn off if you add lean_barrel yourself in darkrpmodification.")
+
     -- Prices -----------------------------------------------------------------
     local prices = section(panel, "Prices")
     for _, ing in ipairs(C.Ingredients) do
@@ -169,5 +176,6 @@ end)
 --------------------------------------------------------------------------------
 net.Receive(LM.NET_SETTINGS, function()
     LM.ApplySettings(net.ReadTable())
+    LM.SyncDarkRPEntity()
     if IsValid(settingsPanel) then build(settingsPanel) end
 end)
