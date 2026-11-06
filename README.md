@@ -17,7 +17,7 @@ Lean Machine is a Garry's Mod addon meant for the DarkRP gamemode. It implements
 ## How to Install
 
 ### Steam (Recommended)
-Simply subscribe to <a href="">Lean Machine on the Steam Workshop</a> and add it to your
+Simply subscribe to <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3834765811">Lean Machine on the Steam Workshop</a> and add it to your
 server's collection.
 
 ### Manual
