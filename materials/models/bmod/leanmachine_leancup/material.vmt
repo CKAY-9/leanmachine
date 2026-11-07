@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/bmod/leanmachine_leancup/cup"
+	"$nocull" "1"
+}

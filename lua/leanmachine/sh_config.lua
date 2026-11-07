@@ -61,7 +61,8 @@ C.Mix = {
 -- Cup
 --------------------------------------------------------------------------------
 C.Cup = {
-    Model          = "models/props_junk/garbage_coffeemug001a.mdl",
+    Model          = "models/bmod/leanmachine_leancup.mdl",
+    AngleOffset    = Angle(-90, 0, 0), -- Rotation applied on spawn to stand the model upright (try Angle(0, 0, 90) or Angle(-90, 0, 0) if wrong)
     Color          = Color(200, 160, 255),
     DespawnTime    = 0,      -- Seconds before an untouched cup is removed. 0 = never
     Drinkable      = true,   -- Press E on the cup to drink it

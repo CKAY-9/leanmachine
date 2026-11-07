@@ -8,6 +8,7 @@ function ENT:Initialize()
     local cfg = LM.Config.Cup
 
     self:SetModel(cfg.Model)
+    if cfg.AngleOffset then self:SetAngles(self:LocalToWorldAngles(cfg.AngleOffset)) end
     self:PhysicsInit(SOLID_VPHYSICS)
     self:SetMoveType(MOVETYPE_VPHYSICS)
     self:SetSolid(SOLID_VPHYSICS)
