@@ -114,6 +114,7 @@ function SELL:Setup(ent, frame)
         net.SendToServer()
         UI.PlaySound(C.Sounds.Click)
         self.pending = RealTime()
+        self.lastHaggle = RealTime()
         self.result = nil
     end
 
@@ -188,7 +189,9 @@ function SELL:Think()
 
     -- Haggle button
     local canHaggle = okSell and LM.CanHaggle(ply)
-    local enabled = canHaggle and not self.pending
+    -- Match the server's cooldown so a quick re-click isn't silently dropped
+    local cooling = self.lastHaggle and RealTime() - self.lastHaggle < (C.Haggle.Cooldown or 1)
+    local enabled = canHaggle and not self.pending and not cooling
     if self.haggleBtn:IsEnabled() ~= enabled then self.haggleBtn:SetEnabled(enabled) end
     if self.pending then
         self.haggleBtn:SetLabel("Haggling" .. string.rep(".", math.floor(RealTime() * 3) % 4))

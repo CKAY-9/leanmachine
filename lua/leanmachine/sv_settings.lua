@@ -43,15 +43,22 @@ local function notify(ply, msg, isError)
 end
 
 net.Receive(LM.NET_SETTINGS, function(len, ply)
-    if (ply.LM_NextSettings or 0) > CurTime() then return end
-    ply.LM_NextSettings = CurTime() + 0.5
-
     local action = net.ReadUInt(2)
 
+    -- Syncs and edits are throttled separately so a sync never eats a save
     if action == REQ_SYNC then
+        if (ply.LM_NextSettingsSync or 0) > CurTime() then return end
+        ply.LM_NextSettingsSync = CurTime() + 0.5
         send(ply)
         return
     end
+
+    if (ply.LM_NextSettings or 0) > CurTime() then
+        -- Tell admins their change was dropped instead of failing silently
+        if canEdit(ply) then notify(ply, "Saving too fast - wait a moment and try again.", true) end
+        return
+    end
+    ply.LM_NextSettings = CurTime() + 0.5
 
     if not canEdit(ply) then
         notify(ply, "Only admins can change Lean Machine settings.", true)

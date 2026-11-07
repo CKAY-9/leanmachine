@@ -135,11 +135,19 @@ local function timerName(ply)
     return "LeanMachine.Drink." .. ply:UserID()
 end
 
+-- True if the speed is still the one we applied (nothing else has changed it since)
+local function speedUnchanged(current, applied)
+    return math.abs(current - applied) < 0.5
+end
+
 function LM.ClearDrink(ply, restoreSpeed)
     timer.Remove(timerName(ply))
-    if restoreSpeed and ply.LM_SpeedBackup then
-        ply:SetWalkSpeed(ply.LM_SpeedBackup.walk)
-        ply:SetRunSpeed(ply.LM_SpeedBackup.run)
+    local b = ply.LM_SpeedBackup
+    if restoreSpeed and b then
+        -- Only undo our own change. If something else set the speed mid-effect
+        -- (e.g. a job change), that value is the new base, so leave it alone.
+        if speedUnchanged(ply:GetWalkSpeed(), b.appliedWalk) then ply:SetWalkSpeed(b.walk) end
+        if speedUnchanged(ply:GetRunSpeed(), b.appliedRun) then ply:SetRunSpeed(b.run) end
     end
     ply.LM_SpeedBackup = nil
 end
@@ -147,17 +155,25 @@ end
 function LM.ApplyDrink(ply)
     local cfg = C.Cup
 
-    if cfg.HealthGain and cfg.HealthGain ~= 0 then
-        ply:SetHealth(math.min(ply:Health() + cfg.HealthGain, ply:GetMaxHealth()))
+    local gain = cfg.HealthGain
+    if gain and gain ~= 0 then
+        local hp, maxHp = ply:Health(), ply:GetMaxHealth()
+        if gain < 0 then
+            ply:SetHealth(hp + gain)
+        elseif hp < maxHp then -- never pull an over-healed player back down to max
+            ply:SetHealth(math.min(hp + gain, maxHp))
+        end
     end
 
     if C.Sounds.Drink ~= "" then ply:EmitSound(C.Sounds.Drink) end
 
     -- Only back up / apply the speed once so repeat drinks extend rather than stack
     if cfg.SpeedMultiplier and cfg.SpeedMultiplier ~= 1 and not ply.LM_SpeedBackup then
-        ply.LM_SpeedBackup = { walk = ply:GetWalkSpeed(), run = ply:GetRunSpeed() }
-        ply:SetWalkSpeed(ply.LM_SpeedBackup.walk * cfg.SpeedMultiplier)
-        ply:SetRunSpeed(ply.LM_SpeedBackup.run * cfg.SpeedMultiplier)
+        local b = { walk = ply:GetWalkSpeed(), run = ply:GetRunSpeed() }
+        ply:SetWalkSpeed(b.walk * cfg.SpeedMultiplier)
+        ply:SetRunSpeed(b.run * cfg.SpeedMultiplier)
+        b.appliedWalk, b.appliedRun = ply:GetWalkSpeed(), ply:GetRunSpeed()
+        ply.LM_SpeedBackup = b
     end
 
     timer.Create(timerName(ply), cfg.Duration, 1, function()

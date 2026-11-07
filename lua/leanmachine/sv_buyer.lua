@@ -102,7 +102,8 @@ net.Receive(LM.NET_HAGGLE, function(_, ply)
     if not nearBuyer(ply, buyer) then return end
 
     local H = C.Haggle
-    if (ply.LM_NextHaggle or 0) > CurTime() then return end
+    -- The client waits out the full cooldown from when it sent; the leeway absorbs network jitter
+    if CurTime() < (ply.LM_NextHaggle or 0) - (C.LatencyTolerance or 0.35) then return end
     ply.LM_NextHaggle = CurTime() + (H.Cooldown or 1)
 
     local ok, reason = LM.CanSell(ply)
