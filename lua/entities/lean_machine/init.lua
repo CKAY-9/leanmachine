@@ -18,7 +18,10 @@ function ENT:Initialize()
     if cfg.Material and cfg.Material ~= "" then self:SetMaterial(cfg.Material) end
 
     local phys = self:GetPhysicsObject()
-    if IsValid(phys) then phys:Wake() end
+    if IsValid(phys) then
+        if cfg.Mass and cfg.Mass > 0 then phys:SetMass(cfg.Mass) end
+        phys:Wake()
+    end
 
     self.LM_Health = cfg.Health
     self:ResetBatch()
@@ -50,6 +53,7 @@ function ENT:UpdateModel()
 
     phys = self:GetPhysicsObject()
     if IsValid(phys) then
+        if cfg.Mass and cfg.Mass > 0 then phys:SetMass(cfg.Mass) end
         if frozen then phys:EnableMotion(false) else phys:Wake() end
     end
 end

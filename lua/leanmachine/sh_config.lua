@@ -45,6 +45,7 @@ C.Barrel = {
     AngleOffset   = Angle(-90, 0, 0), -- Rotation applied on spawn to stand the model upright (try Angle(0, 0, 90) or Angle(-90, 0, 0) if wrong)
     Color         = nil,            -- Optional tint, e.g. Color(110, 80, 150). nil = no tint
     Material      = "",             -- Optional material override
+    Mass          = 100,            -- Physics mass override so it can be gravgunned (gravgun limit is ~250). 0 = use model's mass
     Health        = 200,            -- 0 = indestructible
     OwnerOnly     = false,          -- Only the purchaser can brew
     MaxDistance   = 160,            -- Menu closes if the player walks further than this
