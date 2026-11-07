@@ -21,6 +21,22 @@ C.DarkRP = {
 }
 
 --------------------------------------------------------------------------------
+-- Content download (custom models / materials)
+--   Clients need the barrel and cup models or they see ERROR. Either:
+--     - set WorkshopID to the Lean Machine Workshop addon (3834765811)
+--       (recommended for live servers: fast, cached), or
+--     - leave SendFiles on: the server sends the files itself on join
+--       (uses FastDL if sv_downloadurl is set, otherwise slow direct download)
+--------------------------------------------------------------------------------
+C.Content = {
+    WorkshopID = "",     -- e.g. "3834765811". When set, SendFiles is skipped
+    SendFiles  = true,
+    -- Every model / material folder matching these is sent (wildcards allowed)
+    Models     = { "models/bmod/leanmachine_*.mdl" },
+    Materials  = { "materials/models/bmod/leanmachine_*" },
+}
+
+--------------------------------------------------------------------------------
 -- Barrel
 --------------------------------------------------------------------------------
 C.Barrel = {
