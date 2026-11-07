@@ -24,6 +24,7 @@ LM.ACT_HOLD_END    = 4
 LM.ACT_MIX_BEGIN   = 5
 LM.ACT_MIX_END     = 6
 LM.ACT_CLOSE       = 7
+LM.ACT_SHAKE       = 8 -- idx 1 = started shaking, 0 = stopped
 LM.ACT_BITS        = 4
 
 -- Progress value needed for an ingredient to count as added

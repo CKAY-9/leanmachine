@@ -655,6 +655,7 @@ function MIXER:Think()
     self.slosh = Lerp(math.min(ft * 5, 1), self.slosh, math.Clamp(-vx * 0.035, -30, 30))
 
     self.shaking = self.dragging and not self.finished and self.speed > C.Mix.ShakeSpeed * UI.Scale()
+    self:SyncShaking()
     self.shakeGlow = math.Approach(self.shakeGlow, self.shaking and 1 or 0, ft * 3)
     self.doneGlow = math.Approach(self.doneGlow, 0, ft * 0.8)
 
@@ -707,6 +708,25 @@ function MIXER:Think()
         b.x = b.x + math.sin(RealTime() * 6 + i) * ft * S(10)
         if b.y < level then table.remove(self.bubbles, i) end
     end
+end
+
+-- Tells the server when shaking starts/stops so others see the splash particles.
+-- Stopping is delayed slightly so brief dips below the speed threshold don't spam the net.
+function MIXER:SyncShaking()
+    if self.shaking then
+        self.lastShake = RealTime()
+        if not self.shakeSent then
+            self.shakeSent = true
+            LM.SendAction(self.ent, LM.ACT_SHAKE, 1)
+        end
+    elseif self.shakeSent and RealTime() - (self.lastShake or 0) > 0.4 then
+        self.shakeSent = false
+        LM.SendAction(self.ent, LM.ACT_SHAKE, 0)
+    end
+end
+
+function MIXER:OnRemove()
+    if self.shakeSent then LM.SendAction(self.ent, LM.ACT_SHAKE, 0) end
 end
 
 function MIXER:GetHint()

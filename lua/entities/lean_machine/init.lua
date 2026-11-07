@@ -8,6 +8,7 @@ function ENT:Initialize()
     local cfg = LM.Config.Barrel
 
     self:SetModel(cfg.Model)
+    if cfg.AngleOffset then self:SetAngles(self:LocalToWorldAngles(cfg.AngleOffset)) end
     self:PhysicsInit(SOLID_VPHYSICS)
     self:SetMoveType(MOVETYPE_VPHYSICS)
     self:SetSolid(SOLID_VPHYSICS)
@@ -30,6 +31,27 @@ function ENT:ResetBatch()
     self.LM_Holds = {}
     self.LM_MixStart = nil
     self:SetMixed(false)
+    self:SetShaking(false)
+    self:UpdateModel()
+end
+
+-- Swaps between the empty and filled model based on whether every ingredient is in
+function ENT:UpdateModel()
+    local cfg = LM.Config.Barrel
+    local filled = cfg.FilledModel and cfg.FilledModel ~= "" and LM.AllDone(self)
+    local mdl = filled and cfg.FilledModel or cfg.Model
+    if self:GetModel() == mdl then return end
+
+    local phys = self:GetPhysicsObject()
+    local frozen = IsValid(phys) and not phys:IsMotionEnabled()
+
+    self:SetModel(mdl)
+    self:PhysicsInit(SOLID_VPHYSICS)
+
+    phys = self:GetPhysicsObject()
+    if IsValid(phys) then
+        if frozen then phys:EnableMotion(false) else phys:Wake() end
+    end
 end
 
 function ENT:Use(ply)
@@ -73,6 +95,7 @@ function ENT:EndSession(notifyClient)
     local ply = self.LM_UserRef
     self.LM_UserRef = nil
     self:SetUser(NULL)
+    self:SetShaking(false)
     self.LM_Holds = {}
     self.LM_MixStart = nil
 

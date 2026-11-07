@@ -11,6 +11,7 @@ function ENT:SetupDataTables()
     self:NetworkVar("Entity", 0, "owning_ent") -- set by DarkRP on purchase
     self:NetworkVar("Entity", 1, "User")
     self:NetworkVar("Bool",   0, "Mixed")
+    self:NetworkVar("Bool",   1, "Shaking")
     self:NetworkVar("Float",  0, "NextUse")
     self:NetworkVar("Int",    0, "Batches")
 end

@@ -39,6 +39,7 @@ local function tolerance()
 end
 
 local function ingredientAdded(ent, ply, idx)
+    ent:UpdateModel()
     hook.Run("LeanMachine.IngredientAdded", ply, ent, C.Ingredients[idx])
 end
 
@@ -103,7 +104,12 @@ handlers[LM.ACT_MIX_END] = function(ent, ply)
     if CurTime() - start < C.Mix.Time - tolerance() then return end
 
     ent.LM_MixStart = nil
+    ent:SetShaking(false)
     ent:SetMixed(true)
+end
+
+handlers[LM.ACT_SHAKE] = function(ent, ply, on)
+    ent:SetShaking(on == 1 and ent.LM_MixStart ~= nil and not ent:GetMixed())
 end
 
 handlers[LM.ACT_CLOSE] = function(ent, ply)

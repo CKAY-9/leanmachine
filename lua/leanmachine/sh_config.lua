@@ -24,8 +24,10 @@ C.DarkRP = {
 -- Barrel
 --------------------------------------------------------------------------------
 C.Barrel = {
-    Model         = "models/props_borealis/bluebarrel001.mdl",
-    Color         = Color(110, 80, 150),
+    Model         = "models/bmod/leanmachine_leanbarrel_empty.mdl",  -- Used while ingredients are missing (also the F4 icon)
+    FilledModel   = "models/bmod/leanmachine_leanbarrel_filled.mdl", -- Used once every ingredient is in. "" = always use Model
+    AngleOffset   = Angle(-90, 0, 0), -- Rotation applied on spawn to stand the model upright (try Angle(0, 0, 90) or Angle(-90, 0, 0) if wrong)
+    Color         = nil,            -- Optional tint, e.g. Color(110, 80, 150). nil = no tint
     Material      = "",             -- Optional material override
     Health        = 200,            -- 0 = indestructible
     OwnerOnly     = false,          -- Only the purchaser can brew
@@ -33,6 +35,19 @@ C.Barrel = {
     Cooldown      = 5,              -- Seconds between batches
     MaxBatches    = 0,              -- Machine breaks after this many cups. 0 = unlimited
     LabelDistance = 300,            -- Floating label draw distance
+}
+
+--------------------------------------------------------------------------------
+-- Splash particles shown on the machine while someone is shaking
+--------------------------------------------------------------------------------
+C.Splash = {
+    Enabled  = true,
+    Color    = Color(165, 90, 255),
+    Rate     = 10,                  -- Particles per second
+    Size     = 2.5,                 -- Start size of each droplet
+    Material = "effects/splash2",
+    MinHeight = 0.8,                -- Droplets spawn between these fractions of the model height
+    MaxHeight = 0.9,                --   (0 = bottom, 1 = top)
 }
 
 --------------------------------------------------------------------------------
@@ -63,7 +78,7 @@ C.Mix = {
 C.Cup = {
     Model          = "models/bmod/leanmachine_leancup.mdl",
     AngleOffset    = Angle(-90, 0, 0), -- Rotation applied on spawn to stand the model upright (try Angle(0, 0, 90) or Angle(-90, 0, 0) if wrong)
-    Color          = Color(200, 160, 255),
+    Color          = nil,            -- Optional tint, e.g. Color(200, 160, 255). nil = no tint
     DespawnTime    = 0,      -- Seconds before an untouched cup is removed. 0 = never
     Drinkable      = true,   -- Press E on the cup to drink it
     Duration       = 30,     -- Effect duration in seconds
