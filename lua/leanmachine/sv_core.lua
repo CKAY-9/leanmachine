@@ -39,7 +39,7 @@ local function tolerance()
 end
 
 local function ingredientAdded(ent, ply, idx)
-    ent:UpdateModel()
+    ent:UpdateBodygroups()
     hook.Run("LeanMachine.IngredientAdded", ply, ent, C.Ingredients[idx])
 end
 

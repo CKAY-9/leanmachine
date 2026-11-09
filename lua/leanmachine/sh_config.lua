@@ -40,9 +40,15 @@ C.Content = {
 -- Barrel
 --------------------------------------------------------------------------------
 C.Barrel = {
-    Model         = "models/bmod/leanmachine_leanbarrel_empty.mdl",  -- Used while ingredients are missing (also the F4 icon)
-    FilledModel   = "models/bmod/leanmachine_leanbarrel_filled.mdl", -- Used once every ingredient is in. "" = always use Model
-    AngleOffset   = Angle(-90, 0, 0), -- Rotation applied on spawn to stand the model upright (try Angle(0, 0, 90) or Angle(-90, 0, 0) if wrong)
+    Model         = "models/bmod/leanmachine_leanmachine.mdl",
+    -- Bodygroup name (in the model) -> ingredient ids that must ALL be added for it to show.
+    -- A bodygroup is set to 1 when its ingredients are done, 0 otherwise.
+    Bodygroups    = {
+        candy = { "candy" },
+        ice   = { "ice" },
+        lean  = { "sprite", "codeine" },
+    },
+    AngleOffset   = nil,            -- Optional rotation applied on spawn, e.g. Angle(-90, 0, 0). nil = model is already upright
     Color         = nil,            -- Optional tint, e.g. Color(110, 80, 150). nil = no tint
     Material      = "",             -- Optional material override
     Mass          = 100,            -- Physics mass override so it can be gravgunned (gravgun limit is ~250). 0 = use model's mass

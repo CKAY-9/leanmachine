@@ -48,6 +48,13 @@ function LM.IsIngredientDone(ent, idx)
     return ing ~= nil and LM.GetProgress(ent, idx) >= LM.Required(ing)
 end
 
+-- Index of an ingredient in the config by its id
+function LM.IngredientIndex(id)
+    for i, ing in ipairs(LM.Config.Ingredients) do
+        if ing.id == id then return i end
+    end
+end
+
 function LM.CountDone(ent)
     local n = 0
     for i = 1, #LM.Config.Ingredients do

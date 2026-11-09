@@ -35,26 +35,21 @@ function ENT:ResetBatch()
     self.LM_MixStart = nil
     self:SetMixed(false)
     self:SetShaking(false)
-    self:UpdateModel()
+    self:UpdateBodygroups()
 end
 
--- Swaps between the empty and filled model based on whether every ingredient is in
-function ENT:UpdateModel()
-    local cfg = LM.Config.Barrel
-    local filled = cfg.FilledModel and cfg.FilledModel ~= "" and LM.AllDone(self)
-    local mdl = filled and cfg.FilledModel or cfg.Model
-    if self:GetModel() == mdl then return end
-
-    local phys = self:GetPhysicsObject()
-    local frozen = IsValid(phys) and not phys:IsMotionEnabled()
-
-    self:SetModel(mdl)
-    self:PhysicsInit(SOLID_VPHYSICS)
-
-    phys = self:GetPhysicsObject()
-    if IsValid(phys) then
-        if cfg.Mass and cfg.Mass > 0 then phys:SetMass(cfg.Mass) end
-        if frozen then phys:EnableMotion(false) else phys:Wake() end
+-- Shows each bodygroup once all of its ingredients have been added
+function ENT:UpdateBodygroups()
+    for name, ids in pairs(LM.Config.Barrel.Bodygroups or {}) do
+        local idx = self:FindBodygroupByName(name)
+        if idx >= 0 then
+            local done = true
+            for _, id in ipairs(ids) do
+                local ingIdx = LM.IngredientIndex(id)
+                if not ingIdx or not LM.IsIngredientDone(self, ingIdx) then done = false break end
+            end
+            self:SetBodygroup(idx, done and 1 or 0)
+        end
     end
 end
 

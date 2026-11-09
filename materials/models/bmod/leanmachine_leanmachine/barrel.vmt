@@ -1,0 +1,5 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/bmod/leanmachine_leanmachine/barrel"
+	"$nocull" "1"
+}

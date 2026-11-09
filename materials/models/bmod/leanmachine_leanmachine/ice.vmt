@@ -1,0 +1,6 @@
+"VertexLitGeneric"
+{
+	"$basetexture" "models/bmod/leanmachine_leanmachine/ice"
+	"$translucent" "1"
+	"$nocull" "1"
+}
